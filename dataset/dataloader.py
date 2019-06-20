@@ -17,7 +17,7 @@ class customDataset(data.Dataset):
                 T.RandomVerticalFlip(),
                 T.RandomAffine(45),
                 T.ToTensor(),
-                T.Normalize(mean = [0.485,0.456,0.406], std = [0.229,0.224,0.225])
+                T.Normalize(mean = [0.5,0.5,0.5], std = [0.5,0.5,0.5])
             ])
             folder_list = [data_path + folder for folder in os.listdir(data_path)]
             img_list = [[folder + os.sep + img_name for img_name in os.listdir(folder)] for folder in folder_list]
@@ -30,7 +30,7 @@ class customDataset(data.Dataset):
                 
                 T.Resize((config.img_width, config.img_height)),
                 T.ToTensor(),
-                T.Normalize(mean = [0.485,0.456,0.406], std = [0.229,0.224,0.225])
+                T.Normalize(mean = [0.5,0.5,0.5], std = [0.5,0.5,0.5])
             ])
             #self.img_path_list = [data_path + img_name for img_name in os.listdir(data_path)]
             folder_list = [data_path + folder for folder in os.listdir(data_path)]
