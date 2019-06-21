@@ -44,7 +44,7 @@ def main():
     train_loader = DataLoader(train_dataset, batch_size = config.batch_size, shuffle = True, pin_memory = True)
     val_loader = DataLoader(val_dataset, batch_size = config.batch_size * 2, shuffle = False, pin_memory = False)
     #model preparing
-    model = get_net(config.num_classes, 'vgg11')
+    model = get_net(config.num_classes)
     model = DataParallel(model.cuda(), device_ids = config.gpus)
     model.train()
     #optimizer preparing

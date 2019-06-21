@@ -4,14 +4,14 @@ from torchvision import models
 import  torch.nn.functional as F
 from model.vgg11 import *
 
-def generate_model(num_calsses):
+def generate_model(num_classes):
     class Net(nn.Module):
         def __init__(self):
             super(Net, self).__init__()
             self.conv1 = nn.Conv2d(3, 16, 3, stride = 2)
             self.conv2 = nn.Conv2d(16, 32, 3, stride = 2)
             self.conv3 = nn.Conv2d(32, 16, 3, stride = 2)
-            self.fc = nn.Linear(7 * 7 * 16, config.num_classes)
+            self.fc = nn.Linear(7 * 7 * 16, num_classes)
 
         def forward(self, x):
             x = F.relu(self.conv1(x))
@@ -23,11 +23,11 @@ def generate_model(num_calsses):
     net = Net()
     return net
 
-def get_net(num_calsses, model_name = None):
+def get_net(num_classes, model_name = None):
     #model = eval('models.' + config.model_name + '(pretrained = True)')
     #model.fc = nn.Linear(512, config.num_classes)
     if model_name == None:
         model = generate_model(num_classes)
     else:
-        model = eval(model_name + '(%d)' % num_calsses)
+        model = eval(model_name + '(%d)' % num_classes)
     return model

@@ -8,7 +8,7 @@ def generate_onnx():
     best_model_path = config.weights + config.model_name + os.sep + config.description + os.sep + str(config.fold) + os.sep + 'model_best.pth.tar'
     checkpoint = torch.load(best_model_path)
 
-    model = get_net(config.num_classes, config.model_name)
+    model = get_net(config.num_classes)
     model.cuda()
 
     new_state_dict = OrderedDict()

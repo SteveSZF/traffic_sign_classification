@@ -8,7 +8,7 @@ class Config(object):
         self.train_data = "/dataset/speed_limitation/train/"
         self.test_data = "/dataset/speed_limitation/test/"
         self.val_data = "/dataset/speed_limitation/test/"
-        self.model_name = "vgg11"
+        self.model_name = "customNet"
         self.fold = 0 
         self.weights = "./checkpoints/"
         #best_models = weights + "best_model/"

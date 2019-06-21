@@ -1,0 +1,19 @@
+train_data = /dataset/speed_limitation/train/
+test_data = /dataset/speed_limitation/test/
+val_data = /dataset/speed_limitation/test/
+model_name = customNet
+fold = 0
+gpus = [0]
+description = speed_limitation
+epochs = 10
+batch_size = 16
+img_height = 64
+img_widght = 64
+num_classes = 9
+lr = 0.000100
+lr_decay = 0.000100
+weight_decay = 0.000100
+
+Train Epoch:  1/10 [>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>]  [Current: Loss 1.212750 Top1: 55.841171 ]  1549/1549 [ 100% ]
+Val   Epoch:  1/10 [>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>]  [Current: Loss 0.939294 Top1: 63.653404 ]  284/284 [ 100% ]
+Get Better Top1 : tensor(63.6534, device='cuda:0') saving weights to ./checkpoints/customNet/speed_limitation/0/model_best.pth.tar

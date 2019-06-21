@@ -16,3 +16,16 @@ make
 ./traffic_sign_classifier.bin 图片路径 trt文件路径
 
 
+准确率速度对比
+Pytorch:
+resnet50 99.1% 11.4ms
+resnet18 98.7% 4.84ms
+alexnet 83.8% 3.17ms
+vgg11 fold1 98.90% 2.14ms fold2 97.745% 2.368ms
+squeezenet1.1 fold0 71.6% 4.33ms
+mobilenetv2 95.54% 10.27ms
+
+Tensorrt:
+vgg11 0.91456ms
+
+
