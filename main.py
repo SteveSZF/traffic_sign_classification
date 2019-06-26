@@ -17,6 +17,7 @@ from torch.autograd import Variable
 from dataset.dataloader import *
 from utils.utils import *
 from utils.ProgressBar import *
+from focalLoss import FocalLoss
 random.seed(config.seed)
 torch.manual_seed(config.seed)
 np.random.seed(config.seed)
@@ -51,7 +52,8 @@ def main():
     optimizer = optim.Adam(model.parameters(), lr = config.lr, amsgrad = True, weight_decay = config.weight_decay)
     scheduler = optim.lr_scheduler.StepLR(optimizer, step_size = 10, gamma = 0.1)
     #loss preparing
-    criterion = nn.CrossEntropyLoss().cuda()
+    #criterion = nn.CrossEntropyLoss().cuda()
+    criterion = FocalLoss(config.num_classes).cuda()
 
     train_loss = AverageMeter()
     train_top1 = AverageMeter()
