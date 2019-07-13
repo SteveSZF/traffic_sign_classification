@@ -1,39 +1,32 @@
-# GaitDet
-本项目进行行人检测和人形二值分割，为下一步的步态识别提供高质量的人形特征进行行人再识别
+# Traffic Sign Classification
+本项目用于交通标志分类，并使用TensorRT推理引擎进行部署
 
 ## 运行环境
 OS:Ubuntu16.04 
-GPU:Titan X 
+GPU:1080Ti 
 CUDA:9.0 
 cudnn:7.0 
+PyTorch:1.0.1
 TensorRT:5.0.2.6
-## 任务介绍
-| 任务 | 算法 | 数据集 | 输入图片规格 | 测试效果 | 速度 |
-| ------ | ------ | ------ | ------ | ------ | ------ |
-| 行人检测 | yolov3 | caltech, pascal voc | 416x416 RGB | mAP:71.43% | 62fps |
-| 人形分割 | Deeplabv3+ | cihp | 512x512 RGB | mIoU:91.14% | 24fps |
-## 算法提速
-1. 使用CUDA npp库对图像进行缩放、归一化、通道转换等处理
-2. 利用cuda编程，在GPU上将Deeplabv3+输出的probablity map映射为RGB分割图
-3. 使用多线程以及信号量机制实现同步，使各个任务在各个线程中进行    
+## 数据集
+CCTSDB数据集、GTSRB数据集  
+## 网络结构选择
+| 网络结构 | resnet50 | resnet18 | alexnet | vgg11 | squeezenet1.1 |  mobilenetv2 |
+| ------ | ------ | ------ | ------ | ------ | ------ | ------ |
+| 单次预测时间 | 11.4ms | 4.84ms | 3.17ms | 2.34ms | 4.33ms | 10.27ms | 
+| 测试准确率 | 99.1% | 98.7% | 83.8% | 97.75% | 71.6%  | 95.54% | 
 
-|  | yolov3 | Deeplabv3+ | 总时间 |
-| ------ | ------ | ------ | ------ |
-| 单线程 | 16ms | 43ms | 64ms |
-| 三线程 | 25ms | 55ms | 59ms |
-## GIE模型文件下载地址
-链接：https://pan.baidu.com/s/1kgQaINyk9UZ5CI3CjzZY-A  提取码：6wrd
+所以最终选择vgg11作为分类网络，在TensorRT推理引擎上单次预测时间为0.91456ms  
 ## 运行步骤
-$ git clone https://github.com/SteveSZF/GaitDet.git  
-$ cd GaitDet  
-将下载的两个GIE模型文件分别放到deeplab和yolov3文件中  
-$ cd deeplab  
-$ python generate_onnx.py --model ./deeplabv3_plus.pth.tar  
-$ ../onnx2tensorrt/onnx2tensorrt.bin deeplab.onnx deeplab.trt  
-$ cd ../yolov3  
-$ python yolov3_to_onnx.py --weight yolov3_person_det.weight --cfg yolov3-custom-deploy.cfg --onnx ./yolov3.onnx  
-$ ../onnx2tensorrt/onnx2tensorrt.bin yolov3.onnx yolov3.trt  
-$ ./gait.bin /home/Videos/test.mp4 ../deeplabv3_plus/deeplab.trt  ../new_yolov3_v2/yolov3.trt  
-## Todo
-1. 实现行人跟踪
-2. 实现人体姿态估计
+### 训练+测试
+$ python3 main.py
+### 生成onnx文件：
+$ python3 generate_onnx.py
+### 生成trt文件：
+$ cd TensorRT/onnx2tensorrt
+make
+./onnx2tensorrt.bin onnx路径 trt文件存储路径
+### 使用trt文件预测：
+$ cd TensorRT/runtensorrt
+$ make
+$ ./traffic_sign_classifier.bin 图片路径 trt文件路径  
