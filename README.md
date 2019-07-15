@@ -23,10 +23,10 @@ $ python3 main.py
 ### 生成onnx文件：
 $ python3 generate_onnx.py
 ### 生成trt文件：
-$ cd TensorRT/onnx2tensorrt
-make
-./onnx2tensorrt.bin onnx路径 trt文件存储路径
+$ cd TensorRT/onnx2tensorrt  
+make  
+./onnx2tensorrt.bin onnx路径 trt文件存储路径  
 ### 使用trt文件预测：
-$ cd TensorRT/runtensorrt
-$ make
+$ cd TensorRT/runtensorrt  
+$ make  
 $ ./traffic_sign_classifier.bin 图片路径 trt文件路径  
