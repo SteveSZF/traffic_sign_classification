@@ -24,8 +24,8 @@ $ python3 main.py
 $ python3 generate_onnx.py
 ### 生成trt文件：
 $ cd TensorRT/onnx2tensorrt  
-make  
-./onnx2tensorrt.bin onnx路径 trt文件存储路径  
+$ make  
+$ ./onnx2tensorrt.bin onnx路径 trt文件存储路径  
 ### 使用trt文件预测：
 $ cd TensorRT/runtensorrt  
 $ make  
